@@ -77,6 +77,32 @@ def readAcademic(fileName, id):
         reset()
         return
 
+def AdminRead(fileName, id):
+    NoVacations = {}
+
+    try:
+        with open(fileName) as ACA:
+            lines = ACA.readlines()
+            for line in lines:
+                  splited = line.split(';')
+                  if splited[0] == "Employee ID":
+                    continue
+
+                  if splited[0].strip() == id:
+                    year = str(splited[1].strip())
+                    NumberOfVacations  = splited[2].strip()
+
+                    NoVacations[year] = NumberOfVacations
+        return NoVacations
+
+
+    except FileNotFoundError:
+        red()
+        print('FILE NOT FOUND!')
+        reset()
+        return        
+
+
 
 def readGA(fileName):
     AcaFile = ""
@@ -109,7 +135,7 @@ def readGA(fileName):
                     if AdminFlag == 1:
                         # print('input admin file name:')
                         # AdminFile = input()
-                        AdminFile = "Administrative.txt"
+                        AdminFile = "E:\LinuxProj2-master\Administrative.txt"
 
                         AdminFlag = 0
 
@@ -125,7 +151,7 @@ def readGA(fileName):
                     if AcaFlag == 1:
                         # print('input academic file name:')
                         # AcaFile = input()
-                        AcaFile = "Academic.txt"
+                        AcaFile = "E:\LinuxProj2-master\Academic.txt"
 
                         AcaFlag = 0
 
@@ -153,7 +179,7 @@ def readGA(fileName):
 
 
     except FileNotFoundError:
-        print('FILE NOT FOUND!')
+        print('FILE NOT FOUNDdd!')
         return
 
 
@@ -165,7 +191,7 @@ def main():
     welcom()
     # print('GENERAL EMPLOYEE DATA FILES: ')
     # GAFile = input()
-    GAFile = "GAttributes.txt"
+    GAFile = "E:\LinuxProj2-master\GAttributes.txt"
 
     readGA(GAFile)
 
