@@ -65,12 +65,16 @@ def readAcademic(fileName, id):
 
                 if splited[0].strip() == id:
                     year_sem = str(splited[1].strip()) + '-' + str(splited[2].strip())
-                    coursesInSem = splited[3].split(" ")
+                    coursesInSem = splited[3].strip()
+                    coursesInSem = coursesInSem.split(" ")
+
                     expDict[year_sem] = coursesInSem
         return expDict
 
     except FileNotFoundError:
+        red()
         print('FILE NOT FOUND!')
+        reset()
         return
 
 
@@ -83,7 +87,10 @@ def readGA(fileName):
     try:
         with open(fileName) as GA:
             Lines = GA.readlines()
+
             for line in Lines:
+                line = line.strip()
+
                 # print(line)
                 splited = line.split(';')
                 fullName = splited[1]
@@ -92,15 +99,20 @@ def readGA(fileName):
                 contactInfo = splited[6]
                 contactInfo = contactInfo.split(',')  # email , num, fax
                 TYPE = splited[7]  # THE FLAG! SO U CAN HANDLE THE TYPE OF EMPLOYEE
-                print(TYPE)
+                # print(TYPE)
+
+                if TYPE.strip() == "Type":
+                    continue
 
                 if TYPE.strip() == "Administrative":
 
                     if AdminFlag == 1:
-                        print('input admin file name:')
-                        AdminFile = input()
+                        # print('input admin file name:')
+                        # AdminFile = input()
+                        AdminFile = "Administrative.txt"
+
                         AdminFlag = 0
-                    print('')
+
 
 
                 elif TYPE.strip() == "Academic":
@@ -111,11 +123,16 @@ def readGA(fileName):
 
                     """
                     if AcaFlag == 1:
-                        print('input academic file name:')
-                        AcaFile = input()
+                        # print('input academic file name:')
+                        # AcaFile = input()
+                        AcaFile = "Academic.txt"
+
                         AcaFlag = 0
 
                     expDict = readAcademic(AcaFile, splited[0].strip())
+                    # print(expDict)
+
+
 
                     tmpAcademic = academic.Academic(splited[0].strip(), fullName, splited[2].strip(),
                                                     splited[3].strip(),
@@ -146,8 +163,9 @@ def main():
     # print(e1.name)
     #
     welcom()
-    print('GENERAL EMPLOYEE DATA FILES: ')
-    GAFile = input()
+    # print('GENERAL EMPLOYEE DATA FILES: ')
+    # GAFile = input()
+    GAFile = "GAttributes.txt"
 
     readGA(GAFile)
 
