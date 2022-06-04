@@ -20,6 +20,20 @@ Reset: \033[0m
 """
 
 
+def menu():
+    print("1. Add a new employee record\n"
+          "2. Update general attributes\n"
+          "3. Add/update administrative employee attribute:\n"
+          "4. Add/update academic employee attribute:\n"
+          "5. Employee’s statistics\n"
+          "6. Salary statistics\n"
+          "7. Retirement information\n"
+          "8. Courses statistics:\n"
+          "9. Administrative employees’ statistics:\n"
+          "10.Academic employees’ statistics:"
+          )
+
+
 def welcom():
     green()
     print("                 _                              \n"
@@ -77,6 +91,7 @@ def readAcademic(fileName, id):
         reset()
         return
 
+
 def AdminRead(fileName, id):
     NoVacations = {}
 
@@ -84,15 +99,15 @@ def AdminRead(fileName, id):
         with open(fileName) as ACA:
             lines = ACA.readlines()
             for line in lines:
-                  splited = line.split(';')
-                  if splited[0] == "Employee ID":
+                splited = line.split(';')
+                if splited[0] == "Employee ID":
                     continue
 
-                  if splited[0].strip() == id:
+                if splited[0].strip() == id:
                     year = str(splited[1].strip())
-                    NumberOfVacations  = splited[2].strip()
-
+                    NumberOfVacations = splited[2].strip()
                     NoVacations[year] = NumberOfVacations
+
         return NoVacations
 
 
@@ -100,8 +115,7 @@ def AdminRead(fileName, id):
         red()
         print('FILE NOT FOUND!')
         reset()
-        return        
-
+        return
 
 
 def readGA(fileName):
@@ -135,7 +149,7 @@ def readGA(fileName):
                     if AdminFlag == 1:
                         # print('input admin file name:')
                         # AdminFile = input()
-                        AdminFile = "E:\LinuxProj2-master\Administrative.txt"
+                        AdminFile = "Administrative.txt"
 
                         AdminFlag = 0
 
@@ -151,14 +165,12 @@ def readGA(fileName):
                     if AcaFlag == 1:
                         # print('input academic file name:')
                         # AcaFile = input()
-                        AcaFile = "E:\LinuxProj2-master\Academic.txt"
+                        AcaFile = "Academic.txt"
 
                         AcaFlag = 0
 
                     expDict = readAcademic(AcaFile, splited[0].strip())
                     # print(expDict)
-
-
 
                     tmpAcademic = academic.Academic(splited[0].strip(), fullName, splited[2].strip(),
                                                     splited[3].strip(),
@@ -168,6 +180,7 @@ def readGA(fileName):
                                                     splited[12].strip(), expDict)
 
                     print(tmpAcademic.academicExp)
+                    DATA_BASE[tmpAcademic.ID] = tmpAcademic
 
                     # print('s')
 
@@ -183,6 +196,26 @@ def readGA(fileName):
         return
 
 
+def cmd1():
+    print("PLEASE INPUT NEW EMPLOYEE RECORD: ")
+    ID = input("PLEASE INPUT ID")
+    birthDate = (input("INPUT NEW martialStatus"))
+    martialStatus = (input("INPUT NEW martialStatus"))
+    numberOfChilds = (input("INPUT NEW numberOfChilds"))
+    gender = (input("INPUT NEW gender"))
+    contactInfo = (input("INPUT NEW contactInfo"))
+    empType = (input("INPUT NEW empType"))
+    status = (input("INPUT NEW status"))
+    department = (input("INPUT NEW department"))
+    startingTime = (input("INPUT NEW startingTime"))
+    basicSalary = (input("INPUT NEW basicSalary"))
+    isInsured = (input("INPUT NEW isInsured"))
+
+    tmpEmp = emp.Employee(ID, birthDate, martialStatus, numberOfChilds, gender, contactInfo, empType, status,
+                          department, startingTime, basicSalary, isInsured)
+    DATA_BASE[tmpEmp.ID] = tmpEmp
+
+
 def main():
     # e1 = emp.Employee(1,1,1,23,3,12321,3,1,23,13,2,3,4)
     # e1.name = 'faris'
@@ -191,14 +224,41 @@ def main():
     welcom()
     # print('GENERAL EMPLOYEE DATA FILES: ')
     # GAFile = input()
-    GAFile = "E:\LinuxProj2-master\GAttributes.txt"
-
+    GAFile = "GAttributes.txt"
     readGA(GAFile)
+
+    while True:
+        menu()
+        ch = int(input("PLEASE SELECT A NUMBER"))
+
+        if ch == 1:
+            print('')
+
+        elif ch == 2:
+            print('')
+
+        elif ch == 2:
+            print('')
+        elif ch == 2:
+            print('')
+        elif ch == 2:
+            print('')
+        elif ch == 2:
+            print('')
+        elif ch == 2:
+            print('')
+        elif ch == 2:
+            print('')
+        elif ch == -1:
+            green()
+            print("THANK YOU COME AGAIN ")
+
+            reset()
+            return
 
 
 if __name__ == '__main__':
     main()
-
 
 """
 GAttributes.txt

@@ -1,21 +1,18 @@
 import employee as emp
 
 
-class Admin(emp.Employee):
+class Administrative(emp.Employee):
     def __init__(self, ID, name, birthDate, martialStatus, numberOfChilds, gender,
-                 contactInfo, empType, status, department, startingTime, basicSalary, isInsured, numOfVacations):
+                 contactInfo, empType, status, department, startingTime, basicSalary, isInsured, NoVacations):
         super().__init__(ID, name, birthDate, martialStatus, numberOfChilds, gender,
                          contactInfo, empType, status, department, startingTime, basicSalary, isInsured)
 
-        self.__numOfVacations = numOfVacations
+        self.__NoVacations = NoVacations
 
+    @property
+    def NoVacations(self):
+        return self.__NoVacations
 
-        @property
-        def numOfVacations(self):
-            return self.__numOfVacations
-
-        @numOfVacations.setter
-        def numOfVacations(self, value):
-            self.__numOfVacations = value
-
-
+    @NoVacations.setter
+    def NoVacations(self, value):
+        self.__NoVacations = value
