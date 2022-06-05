@@ -23,10 +23,10 @@ Reset: \033[0m
 
 
 def checkEmail(s):
-   pat = "^[a-zA-Z0-9-_]+@[a-zA-Z0-9]+\.[a-z]{1,3}$"
-   if re.match(pat,s):
-      return True
-   return False
+    pat = "^[a-zA-Z0-9-_]+@[a-zA-Z0-9]+\.[a-z]{1,3}$"
+    if re.match(pat, s):
+        return True
+    return False
 
 
 def menu():
@@ -39,7 +39,9 @@ def menu():
           "7. Retirement information\n"
           "8. Courses statistics:\n"
           "9. Administrative employees’ statistics:\n"
-          "10.Academic employees’ statistics:"
+          "10.Academic employees’ statistics:\n"
+          "-1. EXIT"
+
           )
 
 
@@ -210,7 +212,7 @@ def cmd1():
 
     print("PLEASE INPUT NEW EMPLOYEE RECORD: ")
     ID = input("PLEASE INPUT ID ")
-    name =['','','']
+    name = ['', '', '']
     name[0] = input('PLEASE  INPUT FIRST  NAME  ')
     name[1] = input('PLEASE INPUT MID NAME  ')
     name[2] = input('PLEASE INPUT LAST NAME ')
@@ -226,8 +228,8 @@ def cmd1():
             continue
         break
     while True:
-        martialStatus = (input("INPUT NEW martialStatus "))
-        if martialStatus.lower() != 'single' and martialStatus.lower() != 'Maried' :
+        martialStatus = (input("INPUT NEW martialStatus 'single' 'maried'  "))
+        if martialStatus.lower() != 'single' and martialStatus.lower() != 'Maried':
             red()
             print('INVALID STATUD   ')
             reset()
@@ -241,7 +243,7 @@ def cmd1():
 
         gender = (input("INPUT NEW gender   "))
 
-        if gender.lower() != 'male' and gender.lower() != 'female' :
+        if gender.lower() != 'male' and gender.lower() != 'female':
             red()
             print('INVALID gender   ')
             reset()
@@ -249,21 +251,24 @@ def cmd1():
             continue
         break
 
+    contactInfo = ['','','']
+
     while True:
 
-        contactInfo = (input("INPUT NEW contactInfo "))
+        contactInfo[0] = (input("INPUT E-MAIL "))
 
-        if not checkEmail(contactInfo):
+        if not checkEmail(contactInfo[0]):
             red()
             print('INVALID contactInfo  ')
             reset()
             print('TRY AGAIN ')
             continue
         break
-
+    contactInfo[1] = input('NEW MOBILE NUMBER')
+    contactInfo[2] = input('NEW FAX NUMBER')
 
     while True:
-        status = (input("INPUT NEW status   "))
+        status = (input("INPUT NEW status 'Part-time' 'Full-time'  "))
         if status.lower() != 'part-time' and status.lower() != 'full-time':
             red()
             print('INVALID INPUT   ')
@@ -271,7 +276,6 @@ def cmd1():
             print('TRY AGAIN ')
             continue
         break
-
 
     department = (input("INPUT NEW department   "))
     startingTime = (input("INPUT NEW startingTime   "))
@@ -287,12 +291,9 @@ def cmd1():
             continue
         break
 
-
-
     while True:
-        empType = (input("INPUT NEW Type "    ))
+        empType = (input("INPUT NEW Type "))
         if empType.lower() != "academic" and empType.lower() != 'administrative':
-
             red()
             print('INVALID INPUT   ')
             reset()
@@ -300,21 +301,22 @@ def cmd1():
             continue
         break
 
-
     reset()
 
     # tmpEmp = emp.Employee(ID, birthDate, martialStatus, numberOfChilds, gender, contactInfo, empType, status,
     #                       department, startingTime, basicSalary, isInsured)
     emptyDict = {}
 
-    if empType.strip() == "academic" :
-        newEmp  = academic.Academic(ID,name, birthDate, martialStatus, numberOfChilds, gender, contactInfo, empType, status,
-                                    department, startingTime, basicSalary, isInsured,emptyDict)
+    if empType.strip() == "academic":
+        newEmp = academic.Academic(ID, name, birthDate, martialStatus, numberOfChilds, gender, contactInfo, empType,
+                                   status,
+                                   department, startingTime, basicSalary, isInsured, emptyDict)
 
     elif empType.strip() == "administrative":
 
-        newEmp = admin.Administrative(ID,name, birthDate, martialStatus, numberOfChilds, gender, contactInfo, empType, status,
-                                   department, startingTime, basicSalary, isInsured, emptyDict)
+        newEmp = admin.Administrative(ID, name, birthDate, martialStatus, numberOfChilds, gender, contactInfo, empType,
+                                      status,
+                                      department, startingTime, basicSalary, isInsured, emptyDict)
     else:
         red()
         print('INVALID TYPE')
@@ -322,6 +324,183 @@ def cmd1():
         return
 
     DATA_BASE[newEmp.ID] = newEmp
+
+
+def cmd2():
+    tmpEmp = ''
+    print('PLEASE INPUT EMPLOYEE ID :  ')
+    ID = input()
+    if DATA_BASE.__contains__(ID):
+        tmpEmp = DATA_BASE[ID]
+    else:
+        red()
+        print('ID NOT FOUND!')
+        reset()
+        return
+
+    while True:
+        red()
+        print('input -1 to exit this mode')
+        reset()
+
+        atrb = input(
+            'CHANGE:Name{First Name, Middle Name,Last Name} or Date of birth or Martial status or Number of childs or Gender or\n '
+            'Contact information {email, mobile number, fax} or Type or Status or Department or Starting Time or Basic Salary or health insurance  ')
+
+        if atrb.lower() == 'name':
+            newName = ['', '', '']
+            newName[0] = input('PLEASE  INPUT FIRST  NAME  ')
+            newName[1] = input('PLEASE INPUT MID NAME  ')
+            newName[2] = input('PLEASE INPUT LAST NAME ')
+
+            tmpEmp.name = newName
+
+        elif atrb.lower() == "date of birth":
+            while True:
+                try:
+                    birthDate = (input("INPUT NEW BIRTH DATE  "))
+                    datetime.datetime.strptime(birthDate, '%d/%m/%Y')
+                except ValueError:
+                    red()
+                    print('INVALID DATE ')
+                    reset()
+                    continue
+                tmpEmp.birthDate = birthDate
+
+                break
+
+
+
+
+        elif atrb.lower() == 'martial status':
+
+            while True:
+                martialStatus = (input("INPUT NEW martialStatus 'single' 'maried'  "))
+                if martialStatus.lower() != 'single' and martialStatus.lower() != 'Maried':
+                    red()
+                    print('INVALID STATUD   ')
+                    reset()
+                    print('TRY AGAIN ')
+                    continue
+                tmpEmp.martialStatus = martialStatus
+                break
+
+        elif atrb.lower() == 'number of childs':
+            numberOfChilds = input("INPUT NUMBER OF CHILDS")
+            tmpEmp.numberOfChilds = numberOfChilds
+
+        elif atrb.lower() == 'gender':
+            while True:
+
+                gender = (input("INPUT NEW gender   "))
+
+                if gender.lower() != 'male' and gender.lower() != 'female':
+                    red()
+                    print('INVALID gender   ')
+                    reset()
+                    print('TRY AGAIN ')
+                    continue
+
+                tmpEmp.gender = gender
+                break
+
+        elif atrb.lower() == 'contact information':
+            contactInfo = ['','','']
+
+            while True:
+
+                contactInfo[0] = (input("INPUT NEW E-MAIL "))
+
+                if not checkEmail(contactInfo):
+                    red()
+                    print('INVALID contactInfo  ')
+                    reset()
+                    print('TRY AGAIN ')
+                    continue
+                tmpEmp.contactInfo[0] = contactInfo[0]
+
+                break
+
+            contactInfo[1]= input('NEW MOBILE NUMBER')
+            tmpEmp.contactInfo[1] = contactInfo[1]
+
+            contactInfo[2] = input('NEW FAX NUMBER')
+            tmpEmp.contactInfo[2] = contactInfo[2]
+
+
+
+        elif atrb.lower() == 'status':
+            while True:
+                status = (input("INPUT NEW status 'Part-time' 'Full-time'  "))
+                if status.lower() != 'part-time' and status.lower() != 'full-time':
+                    red()
+                    print('INVALID INPUT   ')
+                    reset()
+                    print('TRY AGAIN ')
+                    continue
+                tmpEmp.status = status
+
+                break
+
+        elif   atrb == 'department':
+            department = (input("INPUT NEW department   "))
+            tmpEmp.department = department
+
+
+        elif  atrb == 'starting time':
+            startingTime = (input("INPUT NEW startingTime   "))
+            tmpEmp.startingTime = startingTime
+
+
+        elif atrb == 'basic salary':
+            basicSalary = (input("INPUT NEW basicSalary "))
+            tmpEmp.basicSalary = basicSalary
+
+        elif atrb =='health insurance':
+            while True:
+                isInsured = (input("INPUT NEW isInsured "))
+                if isInsured.lower() != 'true' and isInsured.lower() != 'false':
+                    red()
+                    print('INVALID INPUT   ')
+                    reset()
+                    print('TRY AGAIN ')
+                    continue
+
+                tmpEmp.isInsured = isInsured
+                break
+
+        elif  atrb == 'type':
+
+            while True:
+                empType = (input("INPUT NEW Type "))
+                if empType.lower() != "academic" and empType.lower() != 'administrative':
+                    red()
+                    print('INVALID INPUT   ')
+                    reset()
+                    print('TRY AGAIN ')
+                    continue
+                tmpEmp.empType = empType
+                break
+
+
+        elif atrb == '-1':
+            return
+
+
+
+
+        else:
+            red()
+
+            print("INVALID INPUT")
+
+            reset()
+
+            """
+            self, ID, name, birthDate, martialStatus, numberOfChilds, gender,
+                 contactInfo, empType, status, department, startingTime, basicSalary, isInsured):
+ 
+            """
 
 
 def main():
@@ -336,40 +515,56 @@ def main():
     readGA(GAFile)
 
     while True:
+        for key, val in DATA_BASE.items():
+            print(key, val.name)
         menu()
-        ch = int(input("PLEASE SELECT A NUMBER  "))
+        ch = (input("PLEASE SELECT A NUMBER  "))
 
-        if ch == 1:
+        if ch == '1':
             for key, val in DATA_BASE.items():
-                print(key,val)
+                print(key, val.name)
             cmd1()
             print(DATA_BASE)
-            print(DATA_BASE['1'].name)
+            if DATA_BASE.__contains__('1'):
+                print(DATA_BASE['1'].name)
+
+            for key, val in DATA_BASE.items():
+                print(key, val.name)
 
 
 
 
-        elif ch == 2:
+        elif ch == '2':
+            cmd2()
             print('')
 
-        elif ch == 2:
+        elif ch == '3':
             print('')
-        elif ch == 2:
+        elif ch == '4':
             print('')
-        elif ch == 2:
+        elif ch == '5':
             print('')
-        elif ch == 2:
+        elif ch == '6':
             print('')
-        elif ch == 2:
+        elif ch == '7':
             print('')
-        elif ch == 2:
+        elif ch == '8':
             print('')
-        elif ch == -1:
+        elif ch == '9':
+            print('')
+        elif ch == '10':
+            print('')
+
+        elif ch == '-1':
             green()
             print("THANK YOU COME AGAIN ")
 
             reset()
             return
+        else:
+            red()
+            print('INVALID INPUT TRY AGAIN')
+            reset()
 
 
 if __name__ == '__main__':
