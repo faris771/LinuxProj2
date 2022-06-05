@@ -1,6 +1,8 @@
 import employee as emp
 import academic
 import admin
+import datetime
+import re
 
 """
        Color Codes
@@ -18,6 +20,13 @@ Bold:   \033[1;3?m
 Reset: \033[0m
 
 """
+
+
+def checkEmail(s):
+   pat = "^[a-zA-Z0-9-_]+@[a-zA-Z0-9]+\.[a-z]{1,3}$"
+   if re.match(pat,s):
+      return True
+   return False
 
 
 def menu():
@@ -197,23 +206,122 @@ def readGA(fileName):
 
 
 def cmd1():
-    print("PLEASE INPUT NEW EMPLOYEE RECORD: ")
-    ID = input("PLEASE INPUT ID")
-    birthDate = (input("INPUT NEW martialStatus"))
-    martialStatus = (input("INPUT NEW martialStatus"))
-    numberOfChilds = (input("INPUT NEW numberOfChilds"))
-    gender = (input("INPUT NEW gender"))
-    contactInfo = (input("INPUT NEW contactInfo"))
-    empType = (input("INPUT NEW empType"))
-    status = (input("INPUT NEW status"))
-    department = (input("INPUT NEW department"))
-    startingTime = (input("INPUT NEW startingTime"))
-    basicSalary = (input("INPUT NEW basicSalary"))
-    isInsured = (input("INPUT NEW isInsured"))
+    green()
 
-    tmpEmp = emp.Employee(ID, birthDate, martialStatus, numberOfChilds, gender, contactInfo, empType, status,
-                          department, startingTime, basicSalary, isInsured)
-    DATA_BASE[tmpEmp.ID] = tmpEmp
+    print("PLEASE INPUT NEW EMPLOYEE RECORD: ")
+    ID = input("PLEASE INPUT ID ")
+    name =['','','']
+    name[0] = input('PLEASE  INPUT FIRST  NAME  ')
+    name[1] = input('PLEASE INPUT MID NAME  ')
+    name[2] = input('PLEASE INPUT LAST NAME ')
+
+    while True:
+        try:
+            birthDate = (input("INPUT NEW BIRTH DATE  "))
+            datetime.datetime.strptime(birthDate, '%d/%m/%Y')
+        except ValueError:
+            red()
+            print('INVALID DATE ')
+            reset()
+            continue
+        break
+    while True:
+        martialStatus = (input("INPUT NEW martialStatus "))
+        if martialStatus.lower() != 'single' and martialStatus.lower() != 'Maried' :
+            red()
+            print('INVALID STATUD   ')
+            reset()
+            print('TRY AGAIN ')
+            continue
+        break
+
+    numberOfChilds = (input("INPUT NEW numberOfChilds   "))
+
+    while True:
+
+        gender = (input("INPUT NEW gender   "))
+
+        if gender.lower() != 'male' and gender.lower() != 'female' :
+            red()
+            print('INVALID gender   ')
+            reset()
+            print('TRY AGAIN ')
+            continue
+        break
+
+    while True:
+
+        contactInfo = (input("INPUT NEW contactInfo "))
+
+        if not checkEmail(contactInfo):
+            red()
+            print('INVALID contactInfo  ')
+            reset()
+            print('TRY AGAIN ')
+            continue
+        break
+
+
+    while True:
+        status = (input("INPUT NEW status   "))
+        if status.lower() != 'part-time' and status.lower() != 'full-time':
+            red()
+            print('INVALID INPUT   ')
+            reset()
+            print('TRY AGAIN ')
+            continue
+        break
+
+
+    department = (input("INPUT NEW department   "))
+    startingTime = (input("INPUT NEW startingTime   "))
+    basicSalary = (input("INPUT NEW basicSalary "))
+
+    while True:
+        isInsured = (input("INPUT NEW isInsured "))
+        if isInsured.lower() != 'true' and isInsured.lower() != 'false':
+            red()
+            print('INVALID INPUT   ')
+            reset()
+            print('TRY AGAIN ')
+            continue
+        break
+
+
+
+    while True:
+        empType = (input("INPUT NEW Type "    ))
+        if empType.lower() != "academic" and empType.lower() != 'administrative':
+
+            red()
+            print('INVALID INPUT   ')
+            reset()
+            print('TRY AGAIN ')
+            continue
+        break
+
+
+    reset()
+
+    # tmpEmp = emp.Employee(ID, birthDate, martialStatus, numberOfChilds, gender, contactInfo, empType, status,
+    #                       department, startingTime, basicSalary, isInsured)
+    emptyDict = {}
+
+    if empType.strip() == "academic" :
+        newEmp  = academic.Academic(ID,name, birthDate, martialStatus, numberOfChilds, gender, contactInfo, empType, status,
+                                    department, startingTime, basicSalary, isInsured,emptyDict)
+
+    elif empType.strip() == "administrative":
+
+        newEmp = admin.Administrative(ID,name, birthDate, martialStatus, numberOfChilds, gender, contactInfo, empType, status,
+                                   department, startingTime, basicSalary, isInsured, emptyDict)
+    else:
+        red()
+        print('INVALID TYPE')
+        reset()
+        return
+
+    DATA_BASE[newEmp.ID] = newEmp
 
 
 def main():
@@ -229,10 +337,17 @@ def main():
 
     while True:
         menu()
-        ch = int(input("PLEASE SELECT A NUMBER"))
+        ch = int(input("PLEASE SELECT A NUMBER  "))
 
         if ch == 1:
-            print('')
+            for key, val in DATA_BASE.items():
+                print(key,val)
+            cmd1()
+            print(DATA_BASE)
+            print(DATA_BASE['1'].name)
+
+
+
 
         elif ch == 2:
             print('')
