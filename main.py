@@ -1,10 +1,8 @@
+import administrative
 import employee as emp
 import academic
 import admin
 import datetime
-
-from datetime import date
-
 import re
 
 """
@@ -159,7 +157,7 @@ def readGA(fileName):
                     continue
 
                 if TYPE.strip() == "Administrative":
-                    print(splited[0])
+
                     if AdminFlag == 1:
                         # print('input admin file name:')
                         # AdminFile = input()
@@ -167,7 +165,14 @@ def readGA(fileName):
 
                         AdminFlag = 0
                     NoVacations = AdminRead(AdminFile, splited[0].strip())
-                    print(NoVacations)
+                    tmpAdmin = administrative.Administrative(splited[0].strip(), fullName, splited[2].strip(),
+                                                    splited[3].strip(),
+                                                    splited[4].strip(), splited[5].strip(), splited[6].strip(),
+                                                    splited[7].strip(), splited[8].strip(),
+                                                    splited[9].strip(), splited[10].strip(), splited[11].strip(),
+                                                    splited[12].strip(), NoVacations)
+
+                    DATA_BASE[tmpAdmin.ID] = tmpAdmin
 
 
 
@@ -195,7 +200,7 @@ def readGA(fileName):
                                                     splited[9].strip(), splited[10].strip(), splited[11].strip(),
                                                     splited[12].strip(), expDict)
 
-                    print(tmpAcademic.academicExp)
+
                     DATA_BASE[tmpAcademic.ID] = tmpAcademic
 
                     # print('s')
@@ -273,14 +278,13 @@ def cmd1():
     contactInfo[2] = input('NEW FAX NUMBER')
 
     while True:
-        status = (input("INPUT NEW status 'Part-time' 'Full-time' 'left-university' "))
-        if status.lower() != 'part-time' and status.lower() != 'full-time' and status.lower() != 'left-university':
+        status = (input("INPUT NEW status 'Part-time' 'Full-time'  "))
+        if status.lower() != 'part-time' and status.lower() != 'full-time':
             red()
             print('INVALID INPUT   ')
             reset()
             print('TRY AGAIN ')
             continue
-
         break
 
     department = (input("INPUT NEW department   "))
@@ -338,6 +342,7 @@ def cmd2():
     ID = input()
     if DATA_BASE.__contains__(ID):
         tmpEmp = DATA_BASE[ID]
+
 
     else:
 
@@ -427,13 +432,16 @@ def cmd2():
                     continue
                 break
 
-            contactInfo[1] = input('NEW MOBILE NUMBER ')
+            contactInfo[1] = input('NEW MOBILE NUMBER')
+            tmpEmp.contactInfo[1] = contactInfo[1]
+
             contactInfo[2] = input('NEW FAX NUMBER')
+            tmpEmp.contactInfo[2] = contactInfo[2]
 
             tmpEmp.contactInfo = contactInfo
 
 
-        elif atrb.lower() == '8':
+        elif atrb.lower() == '7':
             while True:
                 status = (input("INPUT NEW status 'Part-time' 'Full-time'  "))
                 if status.lower() != 'part-time' and status.lower() != 'full-time':
@@ -446,23 +454,23 @@ def cmd2():
 
                 break
 
-        elif atrb == '9':
+        elif atrb == '8':
             department = (input("INPUT NEW department   "))
             tmpEmp.department = department
 
 
-        elif atrb == '10':
+        elif atrb == '9':
             startingTime = (input("INPUT NEW startingTime   "))
             tmpEmp.startingTime = startingTime
 
 
-        elif atrb == '11':
+        elif atrb == '10':
             basicSalary = (input("INPUT NEW basicSalary "))
             tmpEmp.basicSalary = basicSalary
 
-        elif atrb == '12':
+        elif atrb == '11':
             while True:
-                isInsured = (input("INPUT NEW isInsured (true or false) "))
+                isInsured = (input("INPUT NEW isInsured "))
                 if isInsured.lower() != 'true' and isInsured.lower() != 'false':
                     red()
                     print('INVALID INPUT   ')
@@ -473,10 +481,10 @@ def cmd2():
                 tmpEmp.isInsured = isInsured
                 break
 
-        elif atrb == '7':
+        elif atrb == '12':
 
             while True:
-                empType = (input("INPUT NEW Type (academic or  administrative "))
+                empType = (input("INPUT NEW Type "))
                 if empType.lower() != "academic" and empType.lower() != 'administrative':
                     red()
                     print('INVALID INPUT   ')
@@ -505,77 +513,20 @@ def cmd2():
                  contactInfo, empType, status, department, startingTime, basicSalary, isInsured):
 
             """
-
-
-def cmd4():
-    print('PLEASE INPUT EMPLOYEE ID :  ')
-    ID = input()
-    if not DATA_BASE.__contains__(ID):
-        red()
-        print("ID DOESN'T EXIST")
-        reset()
-        return
-    if DATA_BASE[ID].empType.lower() != 'academic':
-        red()
-        print("NOT AN ACADEMIC EMPLOYEE ")
-        reset()
-        return
-
-    if DATA_BASE[ID].status.lower() == "left-university":
-        red()
-        print("EMPLOYEE LEFT THE UNIVERSITY")
-        reset()
-        return
-
-    print("PLESE INPUT YEAR")
-    year = input()
-    sem = input("PLEASE INPUT SEMESTER ")
-    year_sem = str(year) + '-' + str(sem)
-    courses = []
-
-    while True:
-
-        print("input courses in this semester, press -1 to quit adding courses")
-        tmpCourse = input()
-
-        if tmpCourse == '-1':
-            break
-
-        courses.append(tmpCourse)
-    DATA_BASE[ID].academicExp[year_sem] = courses
-
-    print(DATA_BASE[ID].academicExp[year_sem])
-
-
-def canServe(x):
-    year = x.birthDate
-    year = x.birthDate.split('/')
-    year = x[2]
-
-    sTime = x.startingTime
-    sTime = x.split('/')
-    sTime = x[1]
-
-
-    if abs(date.today().year - year) <= 64 and (date.today().year - StopIteration ) <35:
-        return True
-    else:
-        return  False
+def Admin_stastics():
+    for key1 in DATA_BASE:
+        if(DATA_BASE[key1].empType == "Administrative"):
+            print("employee:"+ DATA_BASE[key1].ID )
+            n=sum(int(x) for x in DATA_BASE[key1].NoVacations.values())
+            print("total numbers of vacations for this employee : ")
+            print(n)
+            print("avg numbers  per year  for this employee : ")
+            print(n/len(DATA_BASE[key1].NoVacations))
 
 
 
 
 
-
-
-def cmd7():
-    for key , val in DATA_BASE:
-        if canServe(val):
-            print(val.name)
-
-
-
-    print('')
 
 
 
@@ -616,10 +567,8 @@ def main():
             print('')
 
         elif ch == '3':
-            # omar
             print('')
         elif ch == '4':
-            cmd4()
             print('')
         elif ch == '5':
             print('')
@@ -630,6 +579,7 @@ def main():
         elif ch == '8':
             print('')
         elif ch == '9':
+            Admin_stastics()
             print('')
         elif ch == '10':
             print('')
