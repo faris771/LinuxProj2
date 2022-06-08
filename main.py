@@ -45,7 +45,7 @@ def menu():
           )
 
 
-def welcom():
+def welcome():
     green()
     print("                 _                              \n"
           "                | |                             \n"
@@ -156,7 +156,7 @@ def readGA(fileName):
                     continue
 
                 if TYPE.strip() == "Administrative":
-
+                    print(splited[0])
                     if AdminFlag == 1:
                         # print('input admin file name:')
                         # AdminFile = input()
@@ -332,22 +332,26 @@ def cmd2():
     ID = input()
     if DATA_BASE.__contains__(ID):
         tmpEmp = DATA_BASE[ID]
+
+
     else:
+
         red()
         print('ID NOT FOUND!')
         reset()
         return
 
     while True:
-        red()
+        green()
         print('input -1 to exit this mode')
         reset()
 
         atrb = input(
-            'CHANGE:Name{First Name, Middle Name,Last Name} or Date of birth or Martial status or Number of childs or Gender or\n '
-            'Contact information {email, mobile number, fax} or Type or Status or Department or Starting Time or Basic Salary or health insurance  ')
+            'CHANGE:\n1)Name{First Name, Middle Name,Last Name}\n2)Date of birth \n3)Martial status\n4)Number of childs\n5)Gender\n'
+            '6)Contact information {email, mobile number, fax}\n7)Type\n8)Status\n9)Department\n10)Starting Time\n11)Basic Salary\n12)health insurance  ')
 
-        if atrb.lower() == 'name':
+
+        if atrb.lower() == '1':
             newName = ['', '', '']
             newName[0] = input('PLEASE  INPUT FIRST  NAME  ')
             newName[1] = input('PLEASE INPUT MID NAME  ')
@@ -355,7 +359,7 @@ def cmd2():
 
             tmpEmp.name = newName
 
-        elif atrb.lower() == "date of birth":
+        elif atrb.lower() == "2":
             while True:
                 try:
                     birthDate = (input("INPUT NEW BIRTH DATE  "))
@@ -372,7 +376,7 @@ def cmd2():
 
 
 
-        elif atrb.lower() == 'martial status':
+        elif atrb.lower() == '3':
 
             while True:
                 martialStatus = (input("INPUT NEW martialStatus 'single' 'maried'  "))
@@ -385,11 +389,11 @@ def cmd2():
                 tmpEmp.martialStatus = martialStatus
                 break
 
-        elif atrb.lower() == 'number of childs':
+        elif atrb.lower() == '4':
             numberOfChilds = input("INPUT NUMBER OF CHILDS")
             tmpEmp.numberOfChilds = numberOfChilds
 
-        elif atrb.lower() == 'gender':
+        elif atrb.lower() == '5':
             while True:
 
                 gender = (input("INPUT NEW gender   "))
@@ -404,22 +408,21 @@ def cmd2():
                 tmpEmp.gender = gender
                 break
 
-        elif atrb.lower() == 'contact information':
+        elif atrb.lower() == '6':
             contactInfo = ['','','']
 
             while True:
 
                 contactInfo[0] = (input("INPUT NEW E-MAIL "))
 
-                if not checkEmail(contactInfo):
+                if not checkEmail(contactInfo[0]):
                     red()
                     print('INVALID contactInfo  ')
                     reset()
                     print('TRY AGAIN ')
                     continue
-                tmpEmp.contactInfo[0] = contactInfo[0]
-
                 break
+
 
             contactInfo[1]= input('NEW MOBILE NUMBER')
             tmpEmp.contactInfo[1] = contactInfo[1]
@@ -427,9 +430,10 @@ def cmd2():
             contactInfo[2] = input('NEW FAX NUMBER')
             tmpEmp.contactInfo[2] = contactInfo[2]
 
+            tmpEmp.contactInfo = contactInfo
 
 
-        elif atrb.lower() == 'status':
+        elif atrb.lower() == '7':
             while True:
                 status = (input("INPUT NEW status 'Part-time' 'Full-time'  "))
                 if status.lower() != 'part-time' and status.lower() != 'full-time':
@@ -442,21 +446,21 @@ def cmd2():
 
                 break
 
-        elif   atrb == 'department':
+        elif   atrb == '8':
             department = (input("INPUT NEW department   "))
             tmpEmp.department = department
 
 
-        elif  atrb == 'starting time':
+        elif  atrb == '9':
             startingTime = (input("INPUT NEW startingTime   "))
             tmpEmp.startingTime = startingTime
 
 
-        elif atrb == 'basic salary':
+        elif atrb == '10':
             basicSalary = (input("INPUT NEW basicSalary "))
             tmpEmp.basicSalary = basicSalary
 
-        elif atrb =='health insurance':
+        elif atrb =='11':
             while True:
                 isInsured = (input("INPUT NEW isInsured "))
                 if isInsured.lower() != 'true' and isInsured.lower() != 'false':
@@ -469,7 +473,7 @@ def cmd2():
                 tmpEmp.isInsured = isInsured
                 break
 
-        elif  atrb == 'type':
+        elif  atrb == '12':
 
             while True:
                 empType = (input("INPUT NEW Type "))
@@ -508,7 +512,7 @@ def main():
     # e1.name = 'faris'
     # print(e1.name)
     #
-    welcom()
+    welcome()
     # print('GENERAL EMPLOYEE DATA FILES: ')
     # GAFile = input()
     GAFile = "GAttributes.txt"
