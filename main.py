@@ -107,15 +107,15 @@ def AdminRead(fileName, id):
     NoVacations = {}
 
     try:
-        with open(fileName) as ACA:
-            lines = ACA.readlines()
+        with open(fileName) as AD:
+            lines = AD.readlines()
             for line in lines:
                 splited = line.split(';')
                 if splited[0] == "Employee ID":
                     continue
 
                 if splited[0].strip() == id:
-                    year = str(splited[1].strip())
+                    year = splited[1].strip()
                     NumberOfVacations = splited[2].strip()
                     NoVacations[year] = NumberOfVacations
 
@@ -163,6 +163,8 @@ def readGA(fileName):
                         AdminFile = "Administrative.txt"
 
                         AdminFlag = 0
+                    NoVacations = AdminRead(AdminFile,splited[0].strip())
+                    print(NoVacations)
 
 
 
