@@ -569,13 +569,30 @@ def canServe(x):
 
 
 def cmd7():
-    for key , val in DATA_BASE:
+    for key , val in DATA_BASE.items():
         if canServe(val):
             print(val.name)
 
 
 
-    print('')
+
+def cmd10():
+
+    for key, val in DATA_BASE.items():
+        if val.empType.lower() =='academic':
+            cnt = int(0)
+            print("EMPLOYEE: ",val.ID,val.name[0])
+
+            for key2 , val2 in val.academicExp.items():
+                cnt += len(val2)
+
+        print("number of courses employee taught: {}".format((cnt)))
+        print("The average number of courses the employee taught per semester: {:.2f} ".format(cnt / val.academicExp.__len__ ()))
+
+
+
+
+
 
 
 
@@ -619,20 +636,34 @@ def main():
             # omar
             print('')
         elif ch == '4':
+
             cmd4()
             print('')
         elif ch == '5':
+            # omar
+
             print('')
         elif ch == '6':
+            # omar
+
             print('')
         elif ch == '7':
+            cmd7()
             print('')
         elif ch == '8':
+            # omar
+
             print('')
+
+
         elif ch == '9':
+
+            # omar
             print('')
+
+
         elif ch == '10':
-            print('')
+            cmd10()
 
         elif ch == '-1':
             green()
