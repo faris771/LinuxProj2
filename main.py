@@ -595,7 +595,16 @@ def cmd10():
 
 
 
+def Admin_stastics():
 
+    for key1 in DATA_BASE:
+        if(DATA_BASE[key1].empType == "Administrative"):
+            print("employee:"+ DATA_BASE[key1].ID )
+            n=sum(int(x) for x in DATA_BASE[key1].NoVacations.values())
+            print("total numbers of vacations for this employee : ")
+            print(n)
+            print("avg numbers  per year  for this employee : ")
+            print(n/len(DATA_BASE[key1].NoVacations))
 
 def main():
     # e1 = emp.Employee(1,1,1,23,3,12321,3,1,23,13,2,3,4)
