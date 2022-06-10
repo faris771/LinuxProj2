@@ -23,6 +23,36 @@ Reset: \033[0m
 """
 
 
+def Admin_stastics():
+    for key1 in DATA_BASE:
+        if (DATA_BASE[key1].empType == "Administrative"):
+            print("employee:" + DATA_BASE[key1].ID)
+            n = sum(int(x) for x in DATA_BASE[key1].NoVacations.values())
+            print("total numbers of vacations for this employee : ")
+            print(n)
+            print("avg numbers  per year  for this employee : ")
+            print(n / len(DATA_BASE[key1].NoVacations))
+
+
+def emp_stastics():
+    nAdmin = 0
+    nAcadimic = 0
+    nMale = 0
+    nFemale = 0
+    for key1 in DATA_BASE:
+        if (DATA_BASE[key1].gender == "Male"):
+            nMale += 1
+        if (DATA_BASE[key1].empType == "Administrative"):
+            nAdmin += 1
+        elif (DATA_BASE[key1].empType == "Academic"):
+            nAcadimic += 1
+    nFemale = len(DATA_BASE) - nMale
+    print("Number of academic employees :" + str(nAcadimic))
+    print("Number of administrative employees :" + str(nAdmin))
+    print("Number of male employees :" + str(nMale))
+    print("Number of female employees :" + str(nFemale))
+
+
 def line():
     print("===================================================================")
 
@@ -106,6 +136,8 @@ def readAcademic(fileName, id):
         red()
         print('FILE NOT FOUND!')
         reset()
+        exit(1)
+
         return
 
 
@@ -132,6 +164,8 @@ def AdminRead(fileName, id):
         red()
         print('FILE NOT FOUND!')
         reset()
+        exit(1)
+
         return
 
 
@@ -213,6 +247,8 @@ def readGA(fileName):
 
     except FileNotFoundError:
         print('FILE NOT FOUNDdd!')
+        exit(1)
+
         return
 
 
