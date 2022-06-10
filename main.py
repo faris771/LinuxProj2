@@ -605,6 +605,24 @@ def Admin_stastics():
             print(n)
             print("avg numbers  per year  for this employee : ")
             print(n/len(DATA_BASE[key1].NoVacations))
+def emp_stastics():
+    nAdmin = 0
+    nAcadimic=0
+    nMale=0
+    nFemale=0
+    for key1 in DATA_BASE:
+        if (DATA_BASE[key1].gender == "Male"):
+            nMale+=1
+        if (DATA_BASE[key1].empType == "Administrative"):
+            nAdmin+=1
+        elif(DATA_BASE[key1].empType == "Academic"):
+            nAcadimic+=1
+    nFemale= len(DATA_BASE)-nMale
+    print("Number of academic employees :" + str(nAcadimic))
+    print("Number of administrative employees :" + str(nAdmin))
+    print("Number of male employees :" + str(nMale))
+    print("Number of female employees :" + str(nFemale))
+              
 
 def main():
     # e1 = emp.Employee(1,1,1,23,3,12321,3,1,23,13,2,3,4)
@@ -649,9 +667,7 @@ def main():
             cmd4()
             print('')
         elif ch == '5':
-            # omar
-
-            print('')
+           emp_stastics()
         elif ch == '6':
             # omar
 
@@ -667,9 +683,7 @@ def main():
 
         elif ch == '9':
 
-            # omar
-            print('')
-
+            Admin_stastics()
 
         elif ch == '10':
             cmd10()
