@@ -264,6 +264,7 @@ def cmd2():
         red()
         print('ID NOT FOUND!')
         reset()
+
         return
 
     while True:
@@ -478,8 +479,31 @@ def cmd4():
         return
 
     print("PLEASE INPUT YEAR ")
-    year = input()
-    sem = input("PLEASE INPUT SEMESTER ")
+
+    while True:
+
+        year = input()
+
+        if int(year) < int(DATA_BASE[ID].startingTime.split('/')[1]):
+            red()
+            print('YEAR MUST BE LESS THAN STARTING YEAR')
+            reset()
+            continue
+
+        break
+
+    while True:
+        sem = input("PLEASE INPUT SEMESTER ")
+        if int(sem) > 3 or int(sem) <= 0 :
+            red()
+            print('INVALID SEMSETER (MUST BE 1 OR 2 OR 3 ')
+            reset()
+            continue
+
+        break
+
+
+
     year_sem = str(year).strip() + '-' + str(sem).strip()
     courses = []
 
@@ -553,7 +577,24 @@ def cmd1():
     green()
 
     print("PLEASE INPUT NEW EMPLOYEE RECORD: ")
-    ID = input("PLEASE INPUT ID ")
+
+    while True:
+
+        ID = input("PLEASE INPUT ID ")
+        if len(ID) != 5:
+            red()
+            print('ID MUST BE 5 DIGITS LENGTH')
+            reset()
+            continue
+
+        if not ID.isnumeric():
+            red()
+            print('ID MUST BE DIGITS only LENGTH')
+            reset()
+            continue
+
+        break
+
     if DATA_BASE.__contains__(ID):
         red()
         print("ID ALREADY EXIST")
