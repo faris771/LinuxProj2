@@ -34,23 +34,7 @@ def Admin_stastics():
             print(n / len(DATA_BASE[key1].NoVacations))
 
 
-def emp_stastics():
-    nAdmin = 0
-    nAcadimic = 0
-    nMale = 0
-    nFemale = 0
-    for key1 in DATA_BASE:
-        if (DATA_BASE[key1].gender == "Male"):
-            nMale += 1
-        if (DATA_BASE[key1].empType == "Administrative"):
-            nAdmin += 1
-        elif (DATA_BASE[key1].empType == "Academic"):
-            nAcadimic += 1
-    nFemale = len(DATA_BASE) - nMale
-    print("Number of academic employees :" + str(nAcadimic))
-    print("Number of administrative employees :" + str(nAdmin))
-    print("Number of male employees :" + str(nMale))
-    print("Number of female employees :" + str(nFemale))
+
 
 
 def line():
@@ -744,3 +728,58 @@ def cmd1():
         return
 
     DATA_BASE[newEmp.ID] = newEmp
+def salary_satstics():
+    SalDect = {}
+    total_Admin = 0
+    total_Acadimic = 0
+    nAdmin = 0
+    nAcadimic = 0
+    for key1 in DATA_BASE:
+        if (DATA_BASE[key1].empType == "Administrative"):
+            nAdmin += 1
+            Final_Salary = int(DATA_BASE[key1].basicSalary)
+            if (DATA_BASE[key1].martialStatus.lower() == 'maried' and DATA_BASE[key1].isInsured == 'true'):
+                Final_Salary = Final_Salary + 20 + (
+                        15 * (int(DATA_BASE[key1].numberOfChilds)) - 12 * (1 + (1 + int(DATA_BASE[key1].numberOfChilds))))
+            elif (DATA_BASE[key1].martialStatus.lower() == 'maried' and DATA_BASE[key1].isInsured == 'false'):
+                Final_Salary = Final_Salary + 20 + (
+                        15 * (int(DATA_BASE[key1].numberOfChilds)) )
+            total_Admin+=Final_Salary
+            SalDect[key1]=Final_Salary
+
+
+        elif (DATA_BASE[key1].empType == "Academic"):
+            nAcadimic += 1
+            Final_Salary = int(DATA_BASE[key1].basicSalary)
+            if (DATA_BASE[key1].martialStatus.lower() == 'maried' and DATA_BASE[key1].isInsured == 'true'):
+                Final_Salary = Final_Salary + 20 + (
+                        15 * (int(DATA_BASE[key1].numberOfChilds)) - 12 * (1 + (1 + int(DATA_BASE[key1].numberOfChilds))))
+            elif (DATA_BASE[key1].martialStatus.lower() == 'maried' and DATA_BASE[key1].isInsured == 'false'):
+                Final_Salary = Final_Salary + 20 + (
+                        15 * (int(DATA_BASE[key1].numberOfChilds)))
+            total_Acadimic += Final_Salary
+            SalDect[key1] = Final_Salary
+    print("Average salary for Adminstrative empolyee is : "+ str(total_Admin/nAdmin))
+    print("Average salary for Acadimic empolyee is : "+ str(total_Acadimic/nAcadimic))
+    print ("enter a number to print the names of all employees above it  ")
+    numberr=input()
+    for key in SalDect :
+        if(SalDect[key]>=int(numberr)):
+            print(DATA_BASE[key].name)
+def emp_stastics():
+    nAdmin = 0
+    nAcadimic = 0
+    nMale = 0
+    nFemale = 0
+    for key1 in DATA_BASE:
+        if (DATA_BASE[key1].gender == "Male"):
+            nMale += 1
+        if (DATA_BASE[key1].empType == "Administrative"):
+            nAdmin += 1
+        elif (DATA_BASE[key1].empType == "Academic"):
+            nAcadimic += 1
+    nFemale = len(DATA_BASE) - nMale
+    print("Number of academic employees :" + str(nAcadimic))
+    print("Number of administrative employees :" + str(nAdmin))
+    print("Number of male employees :" + str(nMale))
+    print("Number of female employees :" + str(nFemale))       
