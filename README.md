@@ -1,5 +1,6 @@
 <center><h1>LinuxProj2</h1> </center>
 
+<center>
 ![Screenshot from 2022-06-12 22-05-03](https://user-images.githubusercontent.com/70337488/173256660-33116606-d21e-4030-82a4-5d669bd01b9e.png)
 
 ![Screenshot from 2022-06-12 22-07-31](https://user-images.githubusercontent.com/70337488/173256661-f312e400-6cee-4f76-9149-0127712699ed.png)
@@ -25,6 +26,9 @@
 ![Screenshot from 2022-06-12 22-17-10](https://user-images.githubusercontent.com/70337488/173256675-c448c4d8-6553-44cc-8d65-0d5e5ac279a5.png)
 
 ![Screenshot from 2022-06-12 22-17-23](https://user-images.githubusercontent.com/70337488/173256676-e38b6a0f-1c2c-4cf2-b203-7db9888574e0.png)
+
+
 ![Screenshot from 2022-06-13 01-54-55](https://user-images.githubusercontent.com/70337488/173256875-7a55de17-bc27-42bb-b62a-92c82a8f32a2.png)
 
 
+</center>
