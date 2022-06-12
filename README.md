@@ -1,6 +1,4 @@
-<center>
-LinuxProj2
-</center>
+<center><h1>LinuxProj2</h1> </center>
 
 ![Screenshot from 2022-06-12 22-05-03](https://user-images.githubusercontent.com/70337488/173256660-33116606-d21e-4030-82a4-5d669bd01b9e.png)
 
