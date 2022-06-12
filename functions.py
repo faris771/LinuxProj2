@@ -771,6 +771,7 @@ def emp_stastics():
     nAcadimic = 0
     nMale = 0
     nFemale = 0
+    nFull = 0
     for key1 in DATA_BASE:
         if (DATA_BASE[key1].gender == "Male"):
             nMale += 1
@@ -778,32 +779,40 @@ def emp_stastics():
             nAdmin += 1
         elif (DATA_BASE[key1].empType == "Academic"):
             nAcadimic += 1
+        if (DATA_BASE[key1].status.lower().strip() == "full-time"):
+            nFull+=1
     nFemale = len(DATA_BASE) - nMale
     print("Number of academic employees :" + str(nAcadimic))
     print("Number of administrative employees :" + str(nAdmin))
     print("Number of male employees :" + str(nMale))
-    print("Number of female employees :" + str(nFemale))       
+    print("Number of female employees :" + str(nFemale))
+    print("percantege of full time employees :" + str((nFull / len(DATA_BASE))*100)) 
 def c3():
     print("enter employee id :")
     n=input()
     if (DATA_BASE[n].empType == "Administrative"):
-        if n.strip() in DATA_BASE:
-            if (DATA_BASE[n].status.lower().strip() != "left-university"):
-                print("please enter year .")
-                year = input()
-                print("please enter number of vacation days .")
-                day = input()
-                if (year.strip() in DATA_BASE[n].NoVacations):
-                    DATA_BASE[n].NoVacations.update({year: DATA_BASE[n].NoVacations[year], year:DATA_BASE[n].NoVacations[year] + day})
+            if n.strip() in DATA_BASE:
+                if (DATA_BASE[n].status.lower().strip() != "left-university"):
+                    print("please enter year .")
+                    year = input()
+                    print("please enter number of vacation days .")
+                    day = input()
+                    if (year.strip() in DATA_BASE[n].NoVacations):
+                        DATA_BASE[n].NoVacations.update({year: DATA_BASE[n].NoVacations[year], year:DATA_BASE[n].NoVacations[year] + day})
+                    else:
+                        DATA_BASE[n].NoVacations[year] = day
+
+
                 else:
-                    DATA_BASE[n].NoVacations[year] = day
-
-
+                    print(" this employee has left the uni ")
+                    reset()
+                    return
             else:
-                print(" this employee has left the uni ")
+                print("no user with such id exists ")
                 reset()
                 return
+
     else:
-        print("this isn't an adminsistrative employee")
-        reset()
-        return 
+     print("this isn't an adminsistrative employee")
+     reset()
+     return
