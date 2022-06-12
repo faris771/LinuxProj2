@@ -1,3 +1,4 @@
+import administrative
 import employee as emp
 import academic
 import admin
@@ -32,9 +33,6 @@ def Admin_stastics():
             print(n)
             print("avg numbers  per year  for this employee : ")
             print(n / len(DATA_BASE[key1].NoVacations))
-
-
-
 
 
 def line():
@@ -179,7 +177,7 @@ def readGA(fileName):
                 if TYPE.strip() == "Type":
                     continue
 
-                if TYPE.strip() == "Administrative":
+                if TYPE.strip().lower() == "administrative":
                     # print(splited[0])
                     if AdminFlag == 1:
                         print('input admin file name:')
@@ -189,11 +187,20 @@ def readGA(fileName):
 
                         AdminFlag = 0
                     NoVacations = AdminRead(AdminFile, splited[0].strip())
+                    tmpAdmin = administrative.Administrative(splited[0].strip(), fullName, splited[2].strip(),
+                                                   splited[3].strip(),
+                                                   splited[4].strip(), splited[5].strip(), splited[6].strip(),
+                                                   splited[7].strip(), splited[8].strip(),
+                                                   splited[9].strip(), splited[10].strip(), splited[11].strip(),
+                                                   splited[12].strip(), NoVacations)
+
+                    # print(tmpAcademic.academicExp)
+                    DATA_BASE[tmpAdmin.ID] = tmpAdmin
                     # print(NoVacations)
 
 
 
-                elif TYPE.strip() == "Academic":
+                elif TYPE.strip().lower() == "academic":
 
                     """
                     ID, name, birthDate, martialStatus, numberOfChilds, gender,
@@ -289,9 +296,9 @@ def cmd2():
 
             while True:
                 martialStatus = (input("INPUT NEW martial Status 'single' 'maried'  "))
-                if martialStatus.lower() != 'single' and martialStatus.lower() != 'Maried':
+                if martialStatus.lower() != 'single' and martialStatus.lower() != 'maried':
                     red()
-                    print('INVALID STATUD   ')
+                    print('INVALID STATUS   ')
                     reset()
                     print('TRY AGAIN ')
                     continue
@@ -470,7 +477,7 @@ def cmd4():
 
         if int(year) < int(DATA_BASE[ID].startingTime.split('/')[1]):
             red()
-            print('YEAR MUST BE LESS THAN STARTING YEAR')
+            print('YEAR MUST NOT BE LESS THAN STARTING YEAR')
             reset()
             continue
 
@@ -478,15 +485,13 @@ def cmd4():
 
     while True:
         sem = input("PLEASE INPUT SEMESTER ")
-        if int(sem) > 3 or int(sem) <= 0 :
+        if int(sem) > 3 or int(sem) <= 0:
             red()
             print('INVALID SEMSETER (MUST BE 1 OR 2 OR 3 ')
             reset()
             continue
 
         break
-
-
 
     year_sem = str(year).strip() + '-' + str(sem).strip()
     courses = []
@@ -528,27 +533,29 @@ def cmd7():
 
 
 def cmd10():
-
     for key, val in DATA_BASE.items():
+        cnt = int(0)
+
         if val.empType.lower() == 'academic':
-            cnt = int(0)
             print("EMPLOYEE: ", val.ID, val.name[0])
             for key2, val2 in val.academicExp.items():
                 cnt += len(val2)
 
-        print("number of courses employee taught: {}".format((cnt)))
-        try:
-            print("The average number of courses the employee taught per semester: {:.2f} ".format(
-            cnt / val.academicExp.__len__()))
+            print("number of courses employee taught: {}".format((cnt)))
+            try:
+                print("The average number of courses the employee taught per semester: {:.2f} ".format(
+                    cnt / val.academicExp.__len__()))
 
-        except ZeroDivisionError:
-            continue
+            except ZeroDivisionError:
+                continue
+
+
         print("----------------------------------------------------------------------")
 
 
 def Admin_stastics():
     for key1 in DATA_BASE:
-        if (DATA_BASE[key1].empType == "Administrative"):
+        if (DATA_BASE[key1].empType.strip().lower() == "administrative"):
             print("employee:" + DATA_BASE[key1].ID)
             n = sum(int(x) for x in DATA_BASE[key1].NoVacations.values())
             print("total numbers of vacations for this employee : ")
@@ -687,7 +694,7 @@ def cmd1():
 
     while True:
         isInsured = (input("INPUT 'true' 'false' for health insurance  "))
-        if isInsured.lower() != 'true' and isInsured.lower() != 'false':
+        if isInsured.lower().strip() != 'true' and isInsured.lower().strip() != 'false':
             red()
             print('INVALID INPUT   ')
             reset()
@@ -697,7 +704,7 @@ def cmd1():
 
     while True:
         empType = (input("INPUT  Type  'academic' 'administrative' "))
-        if empType.lower() != "academic" and empType.lower() != 'administrative':
+        if empType.lower().strip() != "academic" and empType.lower() != 'administrative':
             red()
             print('INVALID INPUT   ')
             reset()
@@ -711,12 +718,12 @@ def cmd1():
     #                       department, startingTime, basicSalary, isInsured)
     emptyDict = {}
 
-    if empType.strip() == "academic":
+    if empType.strip().lower() == "academic":
         newEmp = academic.Academic(ID, name, birthDate, martialStatus, numberOfChilds, gender, contactInfo, empType,
                                    status,
                                    department, startingTime, basicSalary, isInsured, emptyDict)
 
-    elif empType.strip() == "administrative":
+    elif empType.strip().lower() == "administrative":
 
         newEmp = admin.Administrative(ID, name, birthDate, martialStatus, numberOfChilds, gender, contactInfo, empType,
                                       status,
@@ -728,6 +735,8 @@ def cmd1():
         return
 
     DATA_BASE[newEmp.ID] = newEmp
+
+
 def salary_satstics():
     SalDect = {}
     total_Admin = 0
@@ -735,84 +744,164 @@ def salary_satstics():
     nAdmin = 0
     nAcadimic = 0
     for key1 in DATA_BASE:
-        if (DATA_BASE[key1].empType == "Administrative"):
+        if (DATA_BASE[key1].empType.lower().strip() == "administrative"):
             nAdmin += 1
             Final_Salary = int(DATA_BASE[key1].basicSalary)
-            if (DATA_BASE[key1].martialStatus.lower() == 'maried' and DATA_BASE[key1].isInsured == 'true'):
+            if (DATA_BASE[key1].martialStatus.lower().strip() == 'maried' and DATA_BASE[
+                key1].isInsured.lower().strip() == 'true'):
                 Final_Salary = Final_Salary + 20 + (
-                        15 * (int(DATA_BASE[key1].numberOfChilds)) - 12 * (1 + (1 + int(DATA_BASE[key1].numberOfChilds))))
-            elif (DATA_BASE[key1].martialStatus.lower() == 'maried' and DATA_BASE[key1].isInsured == 'false'):
+                        15 * (int(DATA_BASE[key1].numberOfChilds)) - 12 * (
+                            1 + (1 + int(DATA_BASE[key1].numberOfChilds))))
+            elif (DATA_BASE[key1].martialStatus.lower().strip() == 'maried' and DATA_BASE[
+                key1].isInsured.lower().strip() == 'false'):
                 Final_Salary = Final_Salary + 20 + (
-                        15 * (int(DATA_BASE[key1].numberOfChilds)) )
-            total_Admin+=Final_Salary
-            SalDect[key1]=Final_Salary
+                        15 * (int(DATA_BASE[key1].numberOfChilds)))
+            total_Admin += Final_Salary
+            SalDect[key1] = Final_Salary
 
 
-        elif (DATA_BASE[key1].empType == "Academic"):
+        elif (DATA_BASE[key1].empType.lower().strip() == "academic"):
             nAcadimic += 1
             Final_Salary = int(DATA_BASE[key1].basicSalary)
             if (DATA_BASE[key1].martialStatus.lower() == 'maried' and DATA_BASE[key1].isInsured == 'true'):
                 Final_Salary = Final_Salary + 20 + (
-                        15 * (int(DATA_BASE[key1].numberOfChilds)) - 12 * (1 + (1 + int(DATA_BASE[key1].numberOfChilds))))
+                        15 * (int(DATA_BASE[key1].numberOfChilds)) - 12 * (
+                            1 + (1 + int(DATA_BASE[key1].numberOfChilds))))
             elif (DATA_BASE[key1].martialStatus.lower() == 'maried' and DATA_BASE[key1].isInsured == 'false'):
                 Final_Salary = Final_Salary + 20 + (
                         15 * (int(DATA_BASE[key1].numberOfChilds)))
             total_Acadimic += Final_Salary
             SalDect[key1] = Final_Salary
-    print("Average salary for Adminstrative empolyee is : "+ str(total_Admin/nAdmin))
-    print("Average salary for Acadimic empolyee is : "+ str(total_Acadimic/nAcadimic))
-    print ("enter a number to print the names of all employees above it  ")
-    numberr=input()
-    for key in SalDect :
-        if(SalDect[key]>=int(numberr)):
+    try:
+        print("Average salary for Adminstrative employee is : " + str(total_Admin / nAdmin))
+    except ZeroDivisionError:
+        print("No Administrative employees :( ")
+
+
+    try:
+        print("Average salary for Acadimic empolyee is : " + str(total_Acadimic / nAcadimic))
+    except ZeroDivisionError:
+        print(" No Administrative employees :(")
+
+    print("enter a number to print the names of all employees above it  ")
+    numberr = input()
+    for key in SalDect:
+        if (SalDect[key] >= int(numberr)):
             print(DATA_BASE[key].name)
+
+
 def emp_stastics():
     nAdmin = 0
     nAcadimic = 0
-    nMale = 0
+    nMale = int(0)
     nFemale = 0
     nFull = 0
+
     for key1 in DATA_BASE:
-        if (DATA_BASE[key1].gender == "Male"):
+
+        if (DATA_BASE[key1].gender.lower().strip() == "male"):
             nMale += 1
-        if (DATA_BASE[key1].empType == "Administrative"):
+
+        if (DATA_BASE[key1].empType.lower().strip() == "administrative"):
             nAdmin += 1
-        elif (DATA_BASE[key1].empType == "Academic"):
+        elif (DATA_BASE[key1].empType.lower().strip() == "academic"):
             nAcadimic += 1
         if (DATA_BASE[key1].status.lower().strip() == "full-time"):
-            nFull+=1
-    nFemale = len(DATA_BASE) - nMale
+            nFull += 1
+
+    nFemale = len(DATA_BASE) - int(nMale)
     print("Number of academic employees :" + str(nAcadimic))
     print("Number of administrative employees :" + str(nAdmin))
     print("Number of male employees :" + str(nMale))
     print("Number of female employees :" + str(nFemale))
-    print("percantege of full time employees :" + str((nFull / len(DATA_BASE))*100)) 
+    print("percantege of full time employees :" + str((nFull / len(DATA_BASE)) * 100))
+
+
 def c3():
     print("enter employee id :")
-    n=input()
-    if (DATA_BASE[n].empType == "Administrative"):
-            if n.strip() in DATA_BASE:
-                if (DATA_BASE[n].status.lower().strip() != "left-university"):
+    n = input()
+    if not DATA_BASE.__contains__(n):
+        red()
+        print("ID NOT FOUND !")
+        reset()
+        return
+
+    if (DATA_BASE[n].empType.strip().lower() == "administrative"):
+        if n.strip() in DATA_BASE:
+            if (DATA_BASE[n].status.lower().strip() != "left-university"):
+
+                while True:
                     print("please enter year .")
                     year = input()
-                    print("please enter number of vacation days .")
-                    day = input()
-                    if (year.strip() in DATA_BASE[n].NoVacations):
-                        DATA_BASE[n].NoVacations.update({year: DATA_BASE[n].NoVacations[year], year:DATA_BASE[n].NoVacations[year] + day})
-                    else:
-                        DATA_BASE[n].NoVacations[year] = day
+                    if int(year) < int(DATA_BASE[n].startingTime.split('/')[1]):
+                        red()
+                        print('YEAR MUST NOT BE LESS THAN STARTING YEAR')
+                        reset()
+                        continue
+
+                    break
 
 
+
+
+
+                print("please enter number of vacation days .")
+                day = input()
+
+
+
+                if (year.strip() in DATA_BASE[n].NoVacations):
+                    DATA_BASE[n].NoVacations.update(
+                        {year: DATA_BASE[n].NoVacations[year], year: DATA_BASE[n].NoVacations[year] + day})
                 else:
-                    print(" this employee has left the uni ")
-                    reset()
-                    return
+                    DATA_BASE[n].NoVacations[year] = day
+
+
             else:
-                print("no user with such id exists ")
+                print(" this employee has left the uni ")
                 reset()
                 return
+        else:
+            print("no user with such id exists ")
+            reset()
+            return
 
     else:
-     print("this isn't an adminsistrative employee")
-     reset()
-     return
+        print("this isn't an administrative employee")
+        reset()
+        return
+
+
+
+def cmd8():
+
+    coursesSet =set([])
+    coursesSet = set(coursesSet)
+
+    for key, val in DATA_BASE.items():
+        if  val.empType.lower() == 'academic':
+
+            for key2, course in  val.academicExp.items():
+                for c in course:
+                    coursesSet.add(c)
+
+
+
+    for course in coursesSet:
+        SETTTTTTT = set([])
+
+        cnt = int(0)
+        print(course)
+
+        for key, val in DATA_BASE.items():
+            if val.empType.lower() == 'academic':
+
+                for key2, course2 in val.academicExp.items():
+                    for c in course2:
+                        if c == course:
+                            cnt += 1
+                            SETTTTTTT.add(key2)
+
+        print("NUMBER OF TIMES TAUGHT:", cnt,"NUMBER OF TEACHERS TAUGHT IT ", len(SETTTTTTT))
+
+
