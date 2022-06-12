@@ -1,4 +1,4 @@
-# LinuxProj2![Screenshot from 2022-06-12 09-40-05](https://user-images.githubusercontent.com/70337488/173256655-f5cd6d24-9e79-42d9-b6f3-d121b3504d10.png)
+# LinuxProj2
 ![Screenshot from 2022-06-12 22-05-03](https://user-images.githubusercontent.com/70337488/173256660-33116606-d21e-4030-82a4-5d669bd01b9e.png)
 ![Screenshot from 2022-06-12 22-07-31](https://user-images.githubusercontent.com/70337488/173256661-f312e400-6cee-4f76-9149-0127712699ed.png)
 ![Screenshot from 2022-06-12 22-08-10](https://user-images.githubusercontent.com/70337488/173256662-835a2e7b-4617-418c-b294-a7ebf7c0e9a7.png)
