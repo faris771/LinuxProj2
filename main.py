@@ -49,7 +49,7 @@ def main():
             print('')
 
         elif ch == '3':
-            # omar
+            c3()
             print('')
         elif ch == '4':
 
@@ -61,7 +61,7 @@ def main():
            print('')
         elif ch == '6':
             # omar
-
+            salary_satstics()
             print('')
         elif ch == '7':
             cmd7()
@@ -69,7 +69,7 @@ def main():
             print('')
         elif ch == '8':
             # omar
-
+            cmd8()
             print('')
 
 
@@ -78,7 +78,7 @@ def main():
             Admin_stastics()
             line()
             print('')
-            
+
 
         elif ch == '10':
             cmd10()
