@@ -1,5 +1,9 @@
 ## LinuxProj2
 
+<hr>
+
+![linux](https://user-images.githubusercontent.com/70337488/177007463-48007f6f-a593-4a68-a32b-0c224c6d53d0.PNG)
+<hr>
 
   
 ## ![Screenshot from 2022-06-12 22-05-03](https://user-images.githubusercontent.com/70337488/173256660-33116606-d21e-4030-82a4-5d669bd01b9e.png)
