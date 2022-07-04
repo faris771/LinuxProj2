@@ -1,8 +1,5 @@
 ## LinuxProj2
-```
-sudo apt install cmatrix
 
-```
 
 
 <hr>
@@ -31,7 +28,6 @@ sudo apt install cmatrix
 
 ## ![Screenshot from 2022-06-12 22-15-36](https://user-images.githubusercontent.com/70337488/173256672-bbc3cdfe-32ea-4173-aa0a-d157be9ebfc2.png)
 
-## ![Screenshot from 2022-06-13 01-54-55](https://user-images.githubusercontent.com/70337488/173256875-7a55de17-bc27-42bbb62a92c82a8f32a2.png)
 
   
 ## ![Screenshot from 2022-06-12 22-16-57](https://user-images.githubusercontent.com/70337488/173256673-9e2ae226-3cc9-471f-9af5-404057e8a328.png)
