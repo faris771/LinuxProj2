@@ -1,4 +1,9 @@
 ## LinuxProj2
+```
+sudo apt install cmatrix
+
+```
+
 
 <hr>
 
